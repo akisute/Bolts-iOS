@@ -41,11 +41,8 @@
             } else {
                 NSNumber *previousDepth = depth;
                 [threadLocal setObject:@(previousDepth.intValue + 1) forKey:kBFTaskDepthKey];
-                @try {
-                    block();
-                } @finally {
-                    [threadLocal setObject:previousDepth forKey:kBFTaskDepthKey];
-                }
+                block();
+                [threadLocal setObject:previousDepth forKey:kBFTaskDepthKey];
             }
         }];
     });

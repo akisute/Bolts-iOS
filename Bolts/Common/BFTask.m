@@ -301,12 +301,7 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     void (^wrappedBlock)() = ^() {
         [executor execute:^{
             id result = nil;
-            @try {
-                result = block(self);
-            } @catch (NSException *exception) {
-                tcs.exception = exception;
-                return;
-            }
+            result = block(self);
             if ([result isKindOfClass:[BFTask class]]) {
                 [(BFTask *)result continueWithBlock:^id(BFTask *task) {
                     if (task.cancelled) {
